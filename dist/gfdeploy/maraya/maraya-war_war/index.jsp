@@ -37,7 +37,7 @@ and open the template in the editor.
                 
                 if(tipoUser == "paciente"){
                     %>
-                    <a href='ConsultarHistorial'> Consultar historial </a>
+                    <a href='HistorialPaciente'> Consultar historial </a>
                     <%
                 }else if(tipoUser == "medico"){
                     %>

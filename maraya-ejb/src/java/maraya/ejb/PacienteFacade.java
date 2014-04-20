@@ -6,10 +6,12 @@
 
 package maraya.ejb;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import maraya.entity.Paciente;
+
 
 /**
  *
@@ -28,5 +30,5 @@ public class PacienteFacade extends AbstractFacade<Paciente> {
     public PacienteFacade() {
         super(Paciente.class);
     }
-    
+
 }

@@ -36,5 +36,6 @@ public class UsuariosPacientesFacade extends AbstractFacade<UsuariosPacientes> {
                 .setParameter("password", password)
                 .getResultList();
     }
+
     
 }
