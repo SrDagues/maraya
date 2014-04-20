@@ -8,26 +8,50 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Maraya</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width">
     </head>
     <body>
-        <div>TODO write content</div>
+        <h1>Maraya</h1>
+        <!-- <div>TODO write content</div> -->
         <% 
             HttpSession miSesion = request.getSession(true);
-            UsuariosPacientes user = null;
-            
-            user = (UsuariosPacientes)miSesion.getAttribute("usuario");
+            Object user = null;
+            user = miSesion.getAttribute("usuario");
             
             //out.println("Tipo: " + (String)miSesion.getAttribute("tipoUsuario") + "<br>");
             
             if(user == null){
-                out.println("El usuario aun no esta identificado");
-                out.println("<a href='loginUsuario.jsp'> Login </a>");
+                //out.println("El usuario aun no esta identificado");
+                %>
+                <div>
+                    <a href='loginUsuario.jsp'> Login de usuario</a>
+                    <br>
+                    <a href='loginMedico.jsp'> Login de medico</a>
+                </div>
+                <%
             }else{
-                out.println("Hola, " + user.getUser());
-                out.println("<a href='Logout'> Logout </a>");
+                
+                String tipoUser = (String)miSesion.getAttribute("tipoUsuario");
+                
+                if(tipoUser == "paciente"){
+                    %>
+                    <a href='ConsultarHistorial'> Consultar historial </a>
+                    <%
+                }else if(tipoUser == "medico"){
+                    %>
+                    <a href='ConsultarHistorialesMedicos'> Consultar historiales de los pacientes </a>
+                    <%
+                }
+                
+                %> 
+                <br>
+                <a href='Logout'> Logout </a> 
+                <%
+                
+                //out.println("Hola, " + user.getUser());
+                //out.println("<a href='Logout'> Logout </a>");
             }
         %>
     </body>

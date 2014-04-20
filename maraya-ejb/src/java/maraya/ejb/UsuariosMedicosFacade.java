@@ -6,10 +6,12 @@
 
 package maraya.ejb;
 
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import maraya.entity.UsuariosMedicos;
+import maraya.entity.UsuariosPacientes;
 
 /**
  *
@@ -29,4 +31,10 @@ public class UsuariosMedicosFacade extends AbstractFacade<UsuariosMedicos> {
         super(UsuariosMedicos.class);
     }
     
+    public List<UsuariosMedicos> login(String usuario, String password){
+        return em.createNamedQuery("UsuariosMedicos.findByUserAndPassword")
+                .setParameter("user", usuario)
+                .setParameter("password", password)
+                .getResultList();
+    }
 }

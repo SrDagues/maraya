@@ -17,18 +17,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import maraya.ejb.UsuariosPacientesFacade;
+import maraya.ejb.UsuariosMedicosFacade;
+import maraya.entity.UsuariosMedicos;
 import maraya.entity.UsuariosPacientes;
 
 /**
  *
  * @author Portatil
  */
-@WebServlet(urlPatterns = {"/LoginUsuario"})
-public class LoginUsuarioServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/LoginMedico"})
+public class LoginMedicoServlet extends HttpServlet {
 
     @EJB
-    private UsuariosPacientesFacade usuariosPacientesFacade;
+    private UsuariosMedicosFacade usuariosMedicosFacade;
             
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -88,32 +89,31 @@ public class LoginUsuarioServlet extends HttpServlet {
         String usuario = request.getParameter("usuario");
         String password = request.getParameter("password");
         
-        List<UsuariosPacientes> users = null;
-        UsuariosPacientes user = null;
+        List<UsuariosMedicos> users = null;
+        UsuariosMedicos user = null;
         out = response.getWriter();
         
-        users = usuariosPacientesFacade.login(usuario, password);
+        users = usuariosMedicosFacade.login(usuario, password);
         
         out = response.getWriter();
         
         if(users != null && users.size() > 0) user = users.get(0);
         
-        if (user == null) {
-            out.println("El usuario o contraseña introducidos son incorrectos");
-        } else {
-            HttpSession miSesion = request.getSession(true);
+        if(user == null) out.println("El usuario o contraseña introducidos son incorrectos");
+        else{
+            HttpSession miSesion = request.getSession(true);            
             Object currentUser = miSesion.getAttribute("usuario");
-
+            
             if (currentUser != null) {
                 miSesion.invalidate();
             }
-
+                
             miSesion.setAttribute("usuario", user);
-            miSesion.setAttribute("tipoUsuario", "paciente");
-
+            miSesion.setAttribute("tipoUsuario", "medico");
+                
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
             dispatcher.forward(request, response);
-
+            
         }
         
         out.close();
